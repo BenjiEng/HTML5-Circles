@@ -1,6 +1,4 @@
 var canvas = document.querySelector('canvas');
-// var innerWidth = window.innerWidth;
-// var innerHeight = window.innerHeight;
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
@@ -11,20 +9,22 @@ var mouse = {
 	x: undefined,
 	y: undefined
 }
-
 var maxRadius = 50;
 
+//resizes canvas on browser resize
 window.addEventListener('resize', function() {
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
 	init();
 });
 
+//sets mouse x and y on mouse move
 window.addEventListener('mousemove', function(e) {
 	mouse.x = e.x;
 	mouse.y = e.y;
 });
 
+//Circle object with draw and update functions
 function Circle(x, dx, y, dy, radius, color) {
 
 	this.x = x;
@@ -68,6 +68,15 @@ function Circle(x, dx, y, dy, radius, color) {
 
 }
 
+//animates the circles calling update on each circle
+function animate() {
+	requestAnimationFrame(animate);
+	//clears the canvas x, y, w, h
+	c.clearRect(0, 0, innerWidth, innerHeight);
+	for(var i=0; i < circles.length; i++) {
+		circles[i].update();
+	}
+}
 
 //resets circles
 var circles = []
@@ -84,20 +93,6 @@ function init() {
 	}
 }
 
-function animate() {
-	requestAnimationFrame(animate);
-	//clears the canvas x, y, w, h
-	c.clearRect(0, 0, innerWidth, innerHeight);
-	for(var i=0; i < circles.length; i++) {
-		circles[i].update();
-	}
-}
-
-animate();
-
-
-
-
 //random color generator
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
@@ -108,5 +103,6 @@ function getRandomColor() {
   return color;
 }
 
+animate();
 
 init();
